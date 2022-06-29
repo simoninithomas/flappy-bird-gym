@@ -154,7 +154,7 @@ class FlappyBirdEnvSimple(gym.Env):
 
         return self._get_observation()
 
-    def render(self, mode='human') -> None:
+    def render(self, mode='human') -> Optional[np.ndarray]:
         """ Renders the next frame. """
         if self._renderer is None:
             self._renderer = FlappyBirdRenderer(screen_size=self._screen_size,
@@ -165,6 +165,8 @@ class FlappyBirdEnvSimple(gym.Env):
             self._renderer.make_display()
 
         self._renderer.draw_surface(show_score=True)
+        if mode == "rgb_array":
+            return pygame.surfarray.array3d(self._renderer.surface)
         self._renderer.update_display()
 
     def close(self):
