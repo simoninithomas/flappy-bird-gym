@@ -166,7 +166,8 @@ class FlappyBirdEnvSimple(gym.Env):
 
         self._renderer.draw_surface(show_score=True)
         if mode == "rgb_array":
-            return pygame.surfarray.array3d(self._renderer.surface)
+            # We need to transpose the frame
+            return np.transpose(pygame.surfarray.array3d(self._renderer.surface), axes=(1, 0, 2))
         self._renderer.update_display()
 
     def close(self):
